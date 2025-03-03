@@ -1,0 +1,15 @@
+load("//third_party/rules_typescript:index.bzl", "ts_library")
+
+genrule(
+    name = "foo_ts",
+    outs = ["foo.ts"],
+    cmd = "echo 'export const a = 1;' > $@",
+)
+
+ts_library(
+    name = "generated_ts",
+    srcs = [":foo.ts"],
+    visibility = [
+        "//third_party/rules_typescript/test/foobar:__pkg__",
+    ],
+)

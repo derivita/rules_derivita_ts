@@ -1,0 +1,9 @@
+"""
+Bazel module providing TypeScript rules and tooling for Derivita projects.
+This module contains custom TypeScript build rules, toolchains, and utilities
+to support TypeScript development within the Derivita ecosystem.
+"""
+
+module(name = "rules_derivita_ts", version = "0.0.1")
+
+bazel_dep(name = "rules_nodejs", version = "5.8.5")
