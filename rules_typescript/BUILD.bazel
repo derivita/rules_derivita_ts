@@ -1,0 +1,104 @@
+# Copyright 2017 The Bazel Authors. All rights reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+load("replacements.bzl", "TYPESCRIPT_REPLACEMENTS")
+load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
+load("@build_bazel_rules_nodejs//:index.bzl", "js_library", "pkg_npm")
+load("//third_party/rules_typescript:index.bzl", "ts_library")
+
+# load("@build_bazel_rules_nodejs//tools/stardoc:index.bzl", "stardoc")
+load("@bazel_skylib//rules:copy_file.bzl", "copy_file")
+
+ts_library(
+    name = "bazel_concatjs_lib",
+    srcs = ["index.ts"],
+    tsconfig = "tsconfig.json",
+    tsickle = False,
+    deps = [
+        "@npm//@types/node",
+        "@npm//karma",
+    ],
+)
+
+js_library(
+    name = "bazel_concatjs",
+    package_name = "@bazel/concatjs",
+    srcs = ["bazel_concatjs_lib"],
+    visibility = ["//third_party/rules_typescript:__subpackages__"],
+)
+
+bzl_library(
+    name = "bzl",
+    testonly = True,
+    srcs = glob(["*.bzl"]),
+    deps = [
+        "//third_party/rules_typescript/devserver:bzl",
+        "//third_party/rules_typescript/internal:bzl",
+        "@bazel_skylib//lib:types",
+        "@build_bazel_rules_nodejs//:bzl",
+        "@build_bazel_rules_nodejs//internal/common:bzl",
+        "@build_bazel_rules_nodejs//internal/node:bzl",
+        "@rules_nodejs//nodejs:bzl",
+    ],
+)
+
+# stardoc(
+#     name = "docs",
+#     testonly = True,
+#     out = "README.md_",
+#     input = "index.docs.bzl",
+#     tags = ["fix-windows"],
+#     deps = [":bzl"],
+# )
+
+# genrule(
+#     name = "docs_scrub_platform",
+#     srcs = ["README.md_"],
+#     outs = ["README.md"],
+#     cmd = "sed -e 's#devserver:devserver_.*_a[mr][dm]64#devserver:devserver_[platform]#' <$< >$@",
+#     visibility = ["//docs:__pkg__"],
+# )
+
+# copy_file(
+#     name = "npm_version_check",
+#     src = "//internal:npm_version_check.js",
+#     out = ":npm_version_check.js",
+# )
+
+# pkg_npm(
+#     name = "npm_package",
+#     package_name = "@bazel/concatjs",
+#     srcs = [
+#         "index.bzl",
+#         "package.json",
+#         "//third_party/rules_typescript/devserver:package_contents",
+#         "//third_party/rules_typescript/internal:package_contents",
+#         "//third_party/rules_typescript/third_party/github.com/bazelbuild/bazel/src/main/protobuf:npm_package_assets",
+#         "//third_party/rules_typescript/third_party/npm/requirejs:package_contents",
+#     ],
+#     build_file_content = "",
+#     substitutions = TYPESCRIPT_REPLACEMENTS,
+#     deps = [
+#         ":README.md",
+#         ":bazel_concatjs_lib",
+#         ":npm_version_check",
+#         "//third_party/rules_typescript/devserver:devserver-darwin",
+#         "//third_party/rules_typescript/devserver:devserver-darwin_arm64",
+#         "//third_party/rules_typescript/devserver:devserver-linux",
+#         "//third_party/rules_typescript/devserver:devserver-windows",
+#         "//third_party/rules_typescript/internal:BUILD",
+#         "//third_party/rules_typescript/internal:generated_BUILD",
+#         "//third_party/rules_typescript/internal:tsc_wrapped",
+#     ],
+# )

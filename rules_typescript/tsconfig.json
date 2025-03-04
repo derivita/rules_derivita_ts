@@ -1,0 +1,8 @@
+{
+    "compilerOptions": {
+        "declaration": true,
+        "module": "umd",
+        "moduleResolution": "node",
+        "types": ["node"]
+    }
+}
