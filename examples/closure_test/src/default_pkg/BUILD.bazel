@@ -1,0 +1,7 @@
+load("@rules_derivita_ts//js:index.bzl", "js_library", "js_binary")
+
+js_library(
+    name = "util",
+    srcs = ["util.js"],
+    visibility = ["//src/app:__pkg__"],
+)

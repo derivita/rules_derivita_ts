@@ -1,0 +1,24 @@
+load("@rules_derivita_ts//js:index.bzl", "js_library", "js_binary")
+
+js_library(
+    name = "main_lib",
+    srcs = ["main.js"],
+    package_name = "test",
+)
+
+js_binary(
+    name = "main_bundle",
+    deps = [":main_lib"],
+    entry_points = ["src/main"],
+    browser_featureset_year = 2022,
+    compilation_level = "ADVANCED",
+    debug = True,
+)
+
+# This should fail with a nice error message
+js_binary(
+    name = "main",
+    deps = [":main_lib"],
+    entry_points = ["src/main"],
+    compilation_level = "ADVANCED",
+)
