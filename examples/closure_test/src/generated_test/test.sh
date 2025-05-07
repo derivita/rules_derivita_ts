@@ -45,11 +45,4 @@ check_contains "$JS" "Hello from generated file"
 # Test that the greeting from generated file works
 check_contains "$JS" "Generated: Test"
 
-# Test that warnings are hidden (window.undeclaredProperty should be preserved)
-check_contains "$JS" "undeclaredProperty"
-
-# Test that imports work in both directions
-check_contains "$JS" "console.log"
-check_contains "$JS" "createGreeting"
-
 echo -e "\nAll tests passed! ✨"

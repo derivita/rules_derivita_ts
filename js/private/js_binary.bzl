@@ -1,6 +1,6 @@
 """Rule for creating JavaScript binaries using Closure Compiler."""
 
-load("//js/private:providers.bzl", "JSEcmaScriptModuleInfo", "DeclarationInfo", "JSInfo")
+load("//js/private:providers.bzl", "DeclarationInfo", "JSEcmaScriptModuleInfo", "JSInfo")
 
 def _collect_js(deps):
     """Collect JS sources and their module names from dependencies."""
@@ -8,7 +8,7 @@ def _collect_js(deps):
     hide_warnings_paths = []  # List of paths to hide warnings for
     extra_annotations = []  # List of JSDoc annotations
     package_mappings = []  # List of (package_name, package_path) pairs
-    
+
     for dep in deps:
         if JSEcmaScriptModuleInfo in dep:
             info = dep[JSEcmaScriptModuleInfo]
@@ -19,16 +19,16 @@ def _collect_js(deps):
                 extra_annotations.extend(info.extra_annotations.to_list())
             if info.package_mappings:
                 package_mappings.extend(info.package_mappings.to_list())
-    
+
     return sources, hide_warnings_paths, depset(extra_annotations).to_list(), package_mappings
 
 def _js_binary_impl(ctx):
     # Collect all sources, warnings paths, annotations, and package mappings
     js_files, hide_warnings_paths, extra_annotations, package_mappings = _collect_js(ctx.attr.deps)
-    
+
     # All input files for the compiler
-    inputs = js_files
-    
+    inputs = [f for f in js_files]
+
     # Create temporary output file for compiler
     temp_js = ctx.actions.declare_file(ctx.label.name + ".tmp.js")
     output_js = ctx.actions.declare_file(ctx.label.name + ".js")
@@ -44,7 +44,7 @@ def _js_binary_impl(ctx):
             ))
 
     args = ctx.actions.args()
-    
+
     # Basic compiler settings
     args.add("--assume_function_wrapper")
     args.add("--compilation_level=%s" % ctx.attr.compilation_level)
@@ -204,7 +204,7 @@ js_binary = rule(
             doc = "The closure compiler JAR file",
             executable = True,
             cfg = "exec",
-            default = "//tools/closure_compiler"
+            default = "//tools/closure_compiler",
         ),
     },
 )
