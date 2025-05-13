@@ -1,0 +1,48 @@
+load("@rules_derivita_ts//js:index.bzl", "js_library", "js_binary")
+
+js_library(
+    name = "main_lib",
+    srcs = ["main.js"],
+    package_name = "test.app",
+    deps = [
+        "//src/lib:greeter",
+        "//src/lib:logger",
+        "//src/default_pkg:util",
+    ],
+)
+
+# Test with ADVANCED compilation
+js_binary(
+    name = "main_advanced",
+    deps = [":main_lib"],
+    entry_points = ["src/app/main"],
+    compilation_level = "ADVANCED",
+)
+
+# Test with SIMPLE compilation and debug mode
+js_binary(
+    name = "main_debug",
+    deps = [":main_lib"],
+    entry_points = ["src/app/main"],
+    compilation_level = "SIMPLE",
+    debug = True,
+)
+
+# Test with WHITESPACE_ONLY to verify imports
+js_binary(
+    name = "main_whitespace",
+    deps = [":main_lib"],
+    entry_points = ["src/app/main"],
+    compilation_level = "WHITESPACE_ONLY",
+)
+
+sh_test(
+    name = "compilation_test",
+    srcs = ["test.sh"],
+    data = [
+        ":main_advanced",
+        ":main_debug",
+        ":main_whitespace",
+    ],
+    deps = ["@bazel_tools//tools/bash/runfiles"],
+)

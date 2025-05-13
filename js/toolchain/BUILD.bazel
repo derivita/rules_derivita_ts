@@ -1,0 +1,8 @@
+"""Toolchain registration for Closure Compiler."""
+
+load(":toolchain.bzl", "closure_compiler_toolchain")
+
+toolchain_type(
+    name = "closure_compiler_toolchain_type",
+    visibility = ["//visibility:public"],
+)

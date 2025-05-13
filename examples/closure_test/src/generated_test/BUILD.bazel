@@ -1,0 +1,86 @@
+load("@rules_derivita_ts//js:index.bzl", "js_binary", "js_library")
+
+# Generate a source file that imports from a normal source
+genrule(
+    name = "gen_importer",
+    srcs = [],
+    outs = ["gen_importer.js"],
+    cmd = """cat > $(OUTS) << 'EOF'
+/**
+ * @fileoverview Generated file that imports from normal source
+ */
+import {createGreeting} from 'test.lib.greeter/greeter.js';
+import {log} from '../lib/logger.js';  // Test relative path import
+
+export function greetFromGenerated(name) {
+    log(createGreeting('Generated: ' + name));
+}
+EOF""",
+)
+
+# Generate a source file that will be imported by normal sources
+genrule(
+    name = "gen_exportable",
+    srcs = [],
+    outs = ["gen_exportable.js"],
+    cmd = """cat > $(OUTS) << 'EOF'
+/**
+ * @fileoverview Generated file that exports functionality
+ * @suppress {strictMissingProperties}
+ */
+
+export function generateMessage() {
+    // Test that this warning is hidden and property is preserved
+    /** @nocollapse */
+    window.undeclaredProperty = 42;
+    return 'Hello from generated file';
+}
+EOF""",
+)
+
+js_library(
+    name = "gen_importer_lib",
+    package_name = "test.generated",
+    srcs = [":gen_importer"],
+    deps = [
+        "//src/lib:greeter",
+        "//src/lib:logger",
+    ],
+)
+
+js_library(
+    name = "gen_exportable_lib",
+    package_name = "test.generated",
+    srcs = [":gen_exportable"],
+    extra_annotations = ["suppress"],  # Test extra_annotations feature
+    hide_warnings = True,  # Hide warnings for this library
+)
+
+# Normal source that imports from generated file
+js_library(
+    name = "normal_importer_lib",
+    package_name = "test.generated",
+    srcs = ["normal_importer.js"],
+    deps = [
+        ":gen_exportable_lib",
+        ":gen_importer_lib",
+    ],
+)
+
+# Test binary that uses both generated and normal sources
+js_binary(
+    name = "generated_test_bin",
+    compilation_level = "ADVANCED",
+    entry_points = ["src/generated_test/normal_importer"],
+    deps = [
+        ":normal_importer_lib",
+    ],
+)
+
+# Test that verifies the output
+sh_test(
+    name = "generated_test",
+    srcs = ["test.sh"],
+    data = [":generated_test_bin"],
+    deps = ["@bazel_tools//tools/bash/runfiles"],
+)

@@ -7,3 +7,11 @@ to support TypeScript development within the Derivita ecosystem.
 module(name = "rules_derivita_ts", version = "0.0.1")
 
 bazel_dep(name = "rules_nodejs", version = "5.8.5")
+bazel_dep(name = "aspect_bazel_lib", version = "2.14.0")
+
+http_jar = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "http_jar")
+http_jar(
+    name = "closure_compiler_jar",
+    url = "https://repo1.maven.org/maven2/com/google/javascript/closure-compiler/v20231112/closure-compiler-v20231112.jar",
+    sha256 = "a07d7f4195fc705f6c66290fe57a4d75fb0c7a926b816fae5f43861e12556e6c",
+)
