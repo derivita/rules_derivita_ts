@@ -12,26 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
-
-# BEGIN-INTERNAL
 load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
-
-# END-INTERNAL
 licenses(["notice"])  # Apache 2.0
 
 package(default_visibility = [
-    "//third_party/rules_typescript:__subpackages__",
+    "//rules_typescript:__subpackages__",
 ])
-
-bzl_library(
-    name = "bzl",
-    srcs = glob(["*.bzl"]),
-    deps = [
-        "@build_bazel_rules_nodejs//internal/js_library:bzl",
-        "@build_bazel_rules_nodejs//internal/pkg_web:bzl",
-    ],
-)
 
 exports_files(["launcher_template.sh"])
 
@@ -166,7 +152,7 @@ filegroup(
 filegroup(
     name = "package_contents",
     srcs = glob(["*"]),
-    visibility = ["//third_party/rules_typescript:__pkg__"],
+    visibility = ["//rules_typescript:__pkg__"],
 )
 
 # BEGIN-INTERNAL
@@ -176,12 +162,12 @@ go_library(
         "main.go",
         "runfile-filesystem.go",
     ],
-    importpath = "github.com/bazelbuild/rules_typescript/devserver",
+    importpath = "github.com/derivita/rules_derivita_ts/rules_typescript/devserver",
     visibility = ["//visibility:private"],
     deps = [
-        "//third_party/rules_typescript/devserver/concatjs:go_default_library",
-        "//third_party/rules_typescript/devserver/devserver:go_default_library",
-        "//third_party/rules_typescript/devserver/runfiles:go_default_library",
+        "//rules_typescript/devserver/concatjs:go_default_library",
+        "//rules_typescript/devserver/devserver:go_default_library",
+        "//rules_typescript/devserver/runfiles:go_default_library",
     ],
 )
 

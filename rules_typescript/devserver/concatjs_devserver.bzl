@@ -153,14 +153,14 @@ concatjs_devserver = rule(
             will be the same binary.
 
             Defaults to precompiled go binary setup by @bazel/typescript npm package""",
-            default = Label("//third_party/rules_typescript/devserver:devserver_bin"),
+            default = Label("//rules_typescript/devserver:devserver_bin"),
             executable = True,
             cfg = "exec",
         ),
         "devserver_host": attr.label(
             doc = """Go based devserver executable for the host platform.
             Defaults to precompiled go binary setup by @bazel/typescript npm package""",
-            default = Label("//third_party/rules_typescript/devserver:devserver_bin"),
+            default = Label("//rules_typescript/devserver:devserver_bin"),
             executable = True,
             cfg = "exec",
         ),
@@ -191,8 +191,8 @@ concatjs_devserver = rule(
             allow_files = True,
         ),
         "_bash_runfile_helpers": attr.label(default = Label("@build_bazel_rules_nodejs//third_party/github.com/bazelbuild/bazel/tools/bash/runfiles")),
-        "_launcher_template": attr.label(allow_single_file = True, default = Label("//third_party/rules_typescript/devserver:launcher_template.sh")),
-        "_requirejs_script": attr.label(allow_single_file = True, default = Label("//third_party/rules_typescript/third_party/npm/requirejs:require.js")),
+        "_launcher_template": attr.label(allow_single_file = True, default = Label("//rules_typescript/devserver:launcher_template.sh")),
+        "_requirejs_script": attr.label(allow_single_file = True, default = Label("//rules_typescript/third_party/npm/requirejs:require.js")),
     },
     outputs = {
         "manifest": "%{name}.MF",

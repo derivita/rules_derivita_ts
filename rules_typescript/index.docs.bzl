@@ -95,7 +95,7 @@ To use `concatjs_devserver`, you simply `load` the rule, and call it with `deps`
 point to your `ts_library` target(s):
 
 ```python
-load("//third_party/rules_typescript:index.bzl", "concatjs_devserver", "ts_library")
+load("//rules_typescript:index.bzl", "concatjs_devserver", "ts_library")
 
 ts_library(
     name = "app",
@@ -184,8 +184,8 @@ nodejs_binary(
 ```
 """
 
-load("//third_party/rules_typescript/devserver:concatjs_devserver.bzl", _concatjs_devserver = "concatjs_devserver")
-load("//third_party/rules_typescript/internal:build_defs.bzl", _ts_library = "ts_library")
+load("//rules_typescript/devserver:concatjs_devserver.bzl", _concatjs_devserver = "concatjs_devserver")
+load("//rules_typescript/internal:build_defs.bzl", _ts_library = "ts_library")
 
 ts_library = _ts_library
 concatjs_devserver = _concatjs_devserver

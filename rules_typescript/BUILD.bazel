@@ -12,13 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("replacements.bzl", "TYPESCRIPT_REPLACEMENTS")
-load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
-load("@build_bazel_rules_nodejs//:index.bzl", "js_library", "pkg_npm")
-load("//third_party/rules_typescript:index.bzl", "ts_library")
-
-# load("@build_bazel_rules_nodejs//tools/stardoc:index.bzl", "stardoc")
-load("@bazel_skylib//rules:copy_file.bzl", "copy_file")
+load("@build_bazel_rules_nodejs//:index.bzl", "js_library")
+load("//rules_typescript:index.bzl", "ts_library")
 
 ts_library(
     name = "bazel_concatjs_lib",
@@ -35,32 +30,9 @@ js_library(
     name = "bazel_concatjs",
     package_name = "@bazel/concatjs",
     srcs = ["bazel_concatjs_lib"],
-    visibility = ["//third_party/rules_typescript:__subpackages__"],
+    visibility = ["//rules_typescript:__subpackages__"],
 )
 
-bzl_library(
-    name = "bzl",
-    testonly = True,
-    srcs = glob(["*.bzl"]),
-    deps = [
-        "//third_party/rules_typescript/devserver:bzl",
-        "//third_party/rules_typescript/internal:bzl",
-        "@bazel_skylib//lib:types",
-        "@build_bazel_rules_nodejs//:bzl",
-        "@build_bazel_rules_nodejs//internal/common:bzl",
-        "@build_bazel_rules_nodejs//internal/node:bzl",
-        "@rules_nodejs//nodejs:bzl",
-    ],
-)
-
-# stardoc(
-#     name = "docs",
-#     testonly = True,
-#     out = "README.md_",
-#     input = "index.docs.bzl",
-#     tags = ["fix-windows"],
-#     deps = [":bzl"],
-# )
 
 # genrule(
 #     name = "docs_scrub_platform",
@@ -82,10 +54,10 @@ bzl_library(
 #     srcs = [
 #         "index.bzl",
 #         "package.json",
-#         "//third_party/rules_typescript/devserver:package_contents",
-#         "//third_party/rules_typescript/internal:package_contents",
-#         "//third_party/rules_typescript/third_party/github.com/bazelbuild/bazel/src/main/protobuf:npm_package_assets",
-#         "//third_party/rules_typescript/third_party/npm/requirejs:package_contents",
+#         "//rules_typescript/devserver:package_contents",
+#         "//rules_typescript/internal:package_contents",
+#         "//rules_typescript/third_party/github.com/bazelbuild/bazel/src/main/protobuf:npm_package_assets",
+#         "//rules_typescript/third_party/npm/requirejs:package_contents",
 #     ],
 #     build_file_content = "",
 #     substitutions = TYPESCRIPT_REPLACEMENTS,
@@ -93,12 +65,12 @@ bzl_library(
 #         ":README.md",
 #         ":bazel_concatjs_lib",
 #         ":npm_version_check",
-#         "//third_party/rules_typescript/devserver:devserver-darwin",
-#         "//third_party/rules_typescript/devserver:devserver-darwin_arm64",
-#         "//third_party/rules_typescript/devserver:devserver-linux",
-#         "//third_party/rules_typescript/devserver:devserver-windows",
-#         "//third_party/rules_typescript/internal:BUILD",
-#         "//third_party/rules_typescript/internal:generated_BUILD",
-#         "//third_party/rules_typescript/internal:tsc_wrapped",
+#         "//rules_typescript/devserver:devserver-darwin",
+#         "//rules_typescript/devserver:devserver-darwin_arm64",
+#         "//rules_typescript/devserver:devserver-linux",
+#         "//rules_typescript/devserver:devserver-windows",
+#         "//rules_typescript/internal:BUILD",
+#         "//rules_typescript/internal:generated_BUILD",
+#         "//rules_typescript/internal:tsc_wrapped",
 #     ],
 # )

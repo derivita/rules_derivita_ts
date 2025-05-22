@@ -1,4 +1,4 @@
-load("//third_party/rules_typescript:index.bzl", "ts_library")
+load("//rules_typescript:index.bzl", "ts_library")
 
 ts_library(
     name = "override",

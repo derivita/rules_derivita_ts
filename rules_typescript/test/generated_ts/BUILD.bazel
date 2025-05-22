@@ -1,4 +1,4 @@
-load("//third_party/rules_typescript:index.bzl", "ts_library")
+load("//rules_typescript:index.bzl", "ts_library")
 
 genrule(
     name = "foo_ts",
@@ -10,6 +10,6 @@ ts_library(
     name = "generated_ts",
     srcs = [":foo.ts"],
     visibility = [
-        "//third_party/rules_typescript/test/foobar:__pkg__",
+        "//rules_typescript/test/foobar:__pkg__",
     ],
 )

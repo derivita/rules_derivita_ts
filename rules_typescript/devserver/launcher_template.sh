@@ -40,7 +40,7 @@ case "${unameOut}" in
                 ;;
 esac
 
-readonly platform_main_manifest="third_party/rules_typescript/devserver/devserver_bin"
+readonly platform_main_manifest="rules_typescript/devserver/devserver_bin"
 
 readonly platform_main=$(rlocation "${platform_main_manifest}")
 

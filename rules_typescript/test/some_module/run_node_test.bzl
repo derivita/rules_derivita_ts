@@ -22,7 +22,7 @@ ts_write_file = rule(
     attrs = {
         "content": attr.string(),
         "_writer": attr.label(
-            default = Label("//third_party/rules_typescript/test/some_module:writer_bin"),
+            default = Label("//rules_typescript/test/some_module:writer_bin"),
             cfg = "exec",
             executable = True,
         ),

@@ -21,14 +21,14 @@ TYPESCRIPT_REPLACEMENTS = dict(
     COMMON_REPLACEMENTS,
     **{
         "#@external ": "",
-        "//third_party/rules_typescript/web_test:karma_bin": "@npm//karma/bin:karma",
+        "//rules_typescript/web_test:karma_bin": "@npm//karma/bin:karma",
         # This BEGIN-DEV fencing is required as files pulled in from
-        # //third_party/rules_typescript:npm_bazel_typescript_package
+        # //rules_typescript:npm_bazel_typescript_package
         # use this alternate fencing
         "(#|\\/\\/)\\s+BEGIN-DEV-ONLY[\\w\\W]+?(#|\\/\\/)\\s+END-DEV-ONLY": "",
         # This file gets vendored into our repo
-        "//third_party/rules_typescript/internal:common": "//@bazel/concatjs/internal:common",
+        "//rules_typescript/internal:common": "//@bazel/concatjs/internal:common",
         # Replace the local compiler label with one that comes from npm
-        "//third_party/rules_typescript/internal:tsc_wrapped_bin": "//@bazel/concatjs/bin:tsc_wrapped",
+        "//rules_typescript/internal:tsc_wrapped_bin": "//@bazel/concatjs/bin:tsc_wrapped",
     }
 )

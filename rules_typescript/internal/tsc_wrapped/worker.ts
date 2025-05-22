@@ -91,7 +91,7 @@ function loadWorkerPb() {
     const runfiles = process.env['BAZEL_NODE_RUNFILES_HELPER'];
     if (runfiles) {
       protofile = require(runfiles).resolve(
-          'build_bazel_rules_nodejs/packages/concatjs/third_party/github.com/bazelbuild/bazel/src/main/protobuf/worker_protocol.proto');
+          '_main/rules_typescript/third_party/github.com/bazelbuild/bazel/src/main/protobuf/worker_protocol.proto');
     }
     if (!protofile) {
       throw new Error(

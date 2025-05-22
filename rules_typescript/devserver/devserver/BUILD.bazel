@@ -3,10 +3,10 @@ load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
 go_library(
     name = "go_default_library",
     srcs = ["devserver.go"],
-    importpath = "github.com/bazelbuild/rules_typescript/devserver/devserver",
+    importpath = "github.com/derivita/rules_derivita_ts/rules_typescript/devserver/devserver",
     visibility = ["//visibility:public"],
     deps = [
-        "//third_party/rules_typescript/devserver/runfiles:go_default_library",
+        "//rules_typescript/devserver/runfiles:go_default_library",
     ],
 )
 
