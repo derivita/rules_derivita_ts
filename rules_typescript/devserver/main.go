@@ -10,9 +10,9 @@ import (
 	"os"
 	"strings"
 
-	"github.com/bazelbuild/rules_typescript/devserver/concatjs"
-	"github.com/bazelbuild/rules_typescript/devserver/devserver"
-	"github.com/bazelbuild/rules_typescript/devserver/runfiles"
+	"github.com/derivita/rules_derivita_ts/rules_typescript/devserver/concatjs"
+	"github.com/derivita/rules_derivita_ts/rules_typescript/devserver/devserver"
+	"github.com/derivita/rules_derivita_ts/rules_typescript/devserver/runfiles"
 )
 
 var (

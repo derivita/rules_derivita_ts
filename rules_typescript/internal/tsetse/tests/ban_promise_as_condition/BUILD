@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("//third_party/rules_typescript:index.bzl", "ts_library")
+load("//rules_typescript:index.bzl", "ts_library")
 
 licenses(["notice"])  # Apache 2.0
 
@@ -42,12 +42,12 @@ ts_library(
         "\\(45,34\\).*" + error_message,
         "\\(47,34\\).*" + error_message,
     ],
-    tsconfig = "//third_party/rules_typescript/internal:tsetse/tsconfig.json",
+    tsconfig = "//rules_typescript/internal:tsetse/tsconfig.json",
 )
 
 ts_library(
     name = "negatives",
     testonly = 1,
     srcs = ["negatives.ts"],
-    tsconfig = "//third_party/rules_typescript/internal:tsetse/tsconfig.json",
+    tsconfig = "//rules_typescript/internal:tsetse/tsconfig.json",
 )

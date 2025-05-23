@@ -19,9 +19,9 @@ load("@build_bazel_rules_nodejs//:providers.bzl", "ExternalNpmPackageInfo", "js_
 
 # pylint: disable=unused-argument
 # pylint: disable=missing-docstring
-load("//third_party/rules_typescript/internal:common/compilation.bzl", "COMMON_ATTRIBUTES", "DEPS_ASPECTS", "compile_ts", "ts_providers_dict_to_struct")
-load("//third_party/rules_typescript/internal:common/tsconfig.bzl", "create_tsconfig")
-load("//third_party/rules_typescript/internal:ts_config.bzl", "TsConfigInfo")
+load("//rules_typescript/internal:common/compilation.bzl", "COMMON_ATTRIBUTES", "DEPS_ASPECTS", "compile_ts", "ts_providers_dict_to_struct")
+load("//rules_typescript/internal:common/tsconfig.bzl", "create_tsconfig")
+load("//rules_typescript/internal:ts_config.bzl", "TsConfigInfo")
 
 _DOC = """type-check and compile a set of TypeScript sources to JavaScript.
 
@@ -69,7 +69,7 @@ my_rule(
 """
 
 # NB: substituted with "//@bazel/concatjs/bin:tsc_wrapped" in the pkg_npm rule
-_DEFAULT_COMPILER = "//third_party/rules_typescript/internal:tsc_wrapped_bin"
+_DEFAULT_COMPILER = "//rules_typescript/internal:tsc_wrapped_bin"
 
 _TYPESCRIPT_TYPINGS = Label(
     # BEGIN-INTERNAL

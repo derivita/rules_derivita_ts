@@ -272,16 +272,16 @@ async function runOneBuild(
 // we don't want users to end up using it like a fancy @ts-ignore.
 // So instead it's limited to a whitelist.
 const expectDiagnosticsWhitelist: string[] = [
-  "@@//third_party/rules_typescript/internal/tsetse/tests/ban_promise_as_condition:positives",
-  "@@//third_party/rules_typescript/internal/tsetse/tests/ban_expect_truthy_promise:positives",
-  "@@//third_party/rules_typescript/test/errorchecks:erroneous",
-  "@@//third_party/rules_typescript/internal/tsetse/tests/check_return_value:expected_diagnostics_test",
-  "@@//third_party/rules_typescript/internal/tsetse/tests/check_return_value:unused_return_value_user_defined_function",
-  "@@//third_party/rules_typescript/internal/tsetse/tests/must_use_promises:positives",
-  "@@//third_party/rules_typescript/internal/tsetse/tests/equals_nan:positives",
-  "@@//third_party/rules_typescript/test/absolute_imports:absolute_imports",
-  "@@//third_party/rules_typescript/test/strict_deps:strict_deps_npm",
-  "@@//third_party/rules_typescript/test/strict_deps:strict_deps"
+  "@@//rules_typescript/internal/tsetse/tests/ban_promise_as_condition:positives",
+  "@@//rules_typescript/internal/tsetse/tests/ban_expect_truthy_promise:positives",
+  "@@//rules_typescript/test/errorchecks:erroneous",
+  "@@//rules_typescript/internal/tsetse/tests/check_return_value:expected_diagnostics_test",
+  "@@//rules_typescript/internal/tsetse/tests/check_return_value:unused_return_value_user_defined_function",
+  "@@//rules_typescript/internal/tsetse/tests/must_use_promises:positives",
+  "@@//rules_typescript/internal/tsetse/tests/equals_nan:positives",
+  "@@//rules_typescript/test/absolute_imports:absolute_imports",
+  "@@//rules_typescript/test/strict_deps:strict_deps_npm",
+  "@@//rules_typescript/test/strict_deps:strict_deps"
 ];
 
 /** errorDiag produces an error diagnostic not bound to a file or location. */

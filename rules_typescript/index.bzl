@@ -17,9 +17,9 @@
 Users should not load files under "/internal"
 """
 
-load("//third_party/rules_typescript/devserver:concatjs_devserver.bzl", _concatjs_devserver = "concatjs_devserver_macro")
-load("//third_party/rules_typescript/internal:build_defs.bzl", _ts_library = "ts_library_macro")
-load("//third_party/rules_typescript/internal:ts_config.bzl", _ts_config = "ts_config")
+load("//rules_typescript/devserver:concatjs_devserver.bzl", _concatjs_devserver = "concatjs_devserver_macro")
+load("//rules_typescript/internal:build_defs.bzl", _ts_library = "ts_library_macro")
+load("//rules_typescript/internal:ts_config.bzl", _ts_config = "ts_config")
 
 concatjs_devserver = _concatjs_devserver
 ts_library = _ts_library

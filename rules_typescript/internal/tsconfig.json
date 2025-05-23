@@ -17,7 +17,7 @@
       "es2018.asynciterable"
     ],
     "paths": {
-      "tsickle": [ "../../../../external/tsickle/tsickle.d.ts", "../../../external/tsickle/tsickle.d.ts"]
+      "tsickle": [ "../../tsickle/tsickle.d.ts", "../tsickle/tsickle.d.ts"]
     },
   },
   // We run the plain tsc compiler so we need to exclude files we don't want it to visit

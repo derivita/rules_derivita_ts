@@ -14,30 +14,12 @@
 
 # gazelle:exclude worker_protocol.proto
 
-load("@bazel_skylib//:bzl_library.bzl", "bzl_library")
 load("@build_bazel_rules_nodejs//:index.bzl", "copy_to_bin", "nodejs_binary")
 load("@npm//typescript:index.bzl", "tsc")
-load("//third_party/rules_typescript:index.bzl", "ts_library")
+load("//rules_typescript:index.bzl", "ts_library")
 
 package(default_visibility = ["//visibility:public"])
 
-bzl_library(
-    name = "bzl",
-    srcs = glob(
-        [
-            "*.bzl",
-            "common/*.bzl",
-        ],
-        exclude = ["internal_*"],
-    ),
-    visibility = ["//visibility:public"],
-    deps = [
-        "@bazel_skylib//lib:types",
-        "@build_bazel_rules_nodejs//:bzl",
-        "@build_bazel_rules_nodejs//internal/common:bzl",
-        "@rules_nodejs//nodejs:bzl",
-    ],
-)
 
 exports_files(["tsetse/tsconfig.json"])
 
@@ -74,7 +56,7 @@ tsc(
     args = [
         "--declaration",
         "-p",
-        "$(BINDIR)/third_party/rules_typescript/internal/tsconfig.json",
+        "$(BINDIR)/rules_typescript/internal/tsconfig.json",
         "--outDir",
         "$(RULEDIR)",
     ],
@@ -83,7 +65,7 @@ tsc(
         "@npm//@types/node",
         # "@npm//@angular/compiler-cli",
         "@npm//protobufjs",
-        "@tsickle",
+        "//tsickle",
         "@npm//tsutils",
         "@npm//typescript",
     ],
@@ -97,13 +79,13 @@ nodejs_binary(
     name = "tsc_wrapped_bin",
     data = [
         ":tsc_wrapped",
-        "//third_party/rules_typescript/third_party/github.com/bazelbuild/bazel/src/main/protobuf:worker_protocol.proto",
+        "//rules_typescript/third_party/github.com/bazelbuild/bazel/src/main/protobuf:worker_protocol.proto",
         "@npm//protobufjs",
         "@npm//source-map-support",
         "@npm//ts-lit-plugin",
         "@npm//tsutils",
         "@npm//typescript",
-        "@tsickle",
+        "//tsickle",
     ],
     entry_point = ":tsc_wrapped/tsc_wrapped.js",
     # Disables the Bazel node modules linker. The node module linker is unreliable for the
@@ -117,13 +99,13 @@ nodejs_binary(
 # ts_library(
 #     name = "test_lib",
 #     srcs = glob(_TSC_WRAPPED_TESTS) + _TSC_WRAPPED_TYPINGS,
-#     compiler = "//third_party/rules_typescript/internal:tsc_wrapped_bin",
-#     tsconfig = "//third_party/rules_typescript/internal:tsconfig.json",
+#     compiler = "//rules_typescript/internal:tsc_wrapped_bin",
+#     tsconfig = "//rules_typescript/internal:tsconfig.json",
 #     deps = [
 #         # "@npm//@angular/compiler-cli",
 #         "@npm//@types/jasmine",
 #         "@npm//@types/node",
-#         "@tsickle",
+#         "//tsickle",
 #         "@npm//typescript",
 #     ],
 # )
@@ -137,7 +119,7 @@ nodejs_binary(
 #     ],
 #     deps = _TSC_WRAPPED_JS + [
 #         ":test_lib",
-#         "//third_party/rules_typescript/third_party/github.com/bazelbuild/bazel/src/main/protobuf:worker_protocol.proto",
+#         "//rules_typescript/third_party/github.com/bazelbuild/bazel/src/main/protobuf:worker_protocol.proto",
 #         "@npm//jasmine",
 #         "@npm//protobufjs",
 #         "@npm//source-map",
@@ -165,5 +147,5 @@ filegroup(
         "common/tsconfig.bzl",
         "ts_config.bzl",
     ],
-    visibility = ["//third_party/rules_typescript:__subpackages__"],
+    visibility = ["//rules_typescript:__subpackages__"],
 )

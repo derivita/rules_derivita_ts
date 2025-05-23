@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-load("//third_party/rules_typescript:index.bzl", "ts_library")
+load("//rules_typescript:index.bzl", "ts_library")
 
 ts_library(
     name = "grandparent",
@@ -52,3 +52,4 @@ ts_library(
     ],
     deps = [":parent"],
 )
+

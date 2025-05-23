@@ -12,7 +12,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/bazelbuild/rules_typescript/devserver/runfiles"
+	"github.com/derivita/rules_derivita_ts/rules_typescript/devserver/runfiles"
 )
 
 // Convert Windows paths separators.

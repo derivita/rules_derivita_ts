@@ -9,7 +9,6 @@ http_archive(
         "https://github.com/bazelbuild/rules_nodejs/releases/download/5.8.5/rules_nodejs-5.8.5.tar.gz",
     ],
 )
-load("@build_bazel_rules_nodejs//toolchains/esbuild:esbuild_repositories.bzl", "esbuild_repositories")
 
 nodejs_register_toolchains(
     name = "nodejs",

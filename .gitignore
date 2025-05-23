@@ -1,2 +1,6 @@
 /bazel-*
 node_modules/
+examples/closure_test/bazel-bin
+examples/closure_test/bazel-closure_test
+examples/closure_test/bazel-testlogs
+examples/closure_test/bazel-out

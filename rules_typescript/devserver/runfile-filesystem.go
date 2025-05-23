@@ -7,7 +7,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/bazelbuild/rules_typescript/devserver/runfiles"
+	"github.com/derivita/rules_derivita_ts/rules_typescript/devserver/runfiles"
 )
 
 // RunfileFileSystem implements FileSystem type from concatjs.

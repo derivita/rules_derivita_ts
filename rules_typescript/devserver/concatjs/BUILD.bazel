@@ -3,7 +3,7 @@ load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
 go_library(
     name = "go_default_library",
     srcs = ["concatjs.go"],
-    importpath = "github.com/bazelbuild/rules_typescript/devserver/concatjs",
+    importpath = "github.com/derivita/rules_derivita_ts/rules_typescript/devserver/concatjs",
     visibility = ["//visibility:public"],
 )
 

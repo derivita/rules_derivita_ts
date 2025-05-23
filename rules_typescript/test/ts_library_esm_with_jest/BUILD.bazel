@@ -1,5 +1,5 @@
 load("@build_bazel_rules_nodejs//:index.bzl", "copy_to_bin")
-load("//third_party/rules_typescript:index.bzl", "ts_library")
+load("//rules_typescript:index.bzl", "ts_library")
 load(":ts_jest_test.bzl", "ts_jest_test")
 
 ts_library(
