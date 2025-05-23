@@ -2,7 +2,5 @@
 node_modules/
 examples/closure_test/bazel-bin
 examples/closure_test/bazel-closure_test
-.gitignore
-.gitignore
 examples/closure_test/bazel-testlogs
 examples/closure_test/bazel-out
