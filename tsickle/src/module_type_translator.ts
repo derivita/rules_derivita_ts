@@ -264,6 +264,12 @@ export class ModuleTypeTranslator {
       return;  // Do not emit goog.requireType for paths marked as always
                // unknown.
     }
+
+    // Special case for goog.js imports - don't generate requireType imports
+    // since goog should be accessed globally in Closure Compiler
+    if (importPath.includes('closure/goog/goog.js')) {
+      return;
+    }
     const nsImport = googmodule.jsPathToNamespace(
         this.host, context, this.diagnostics, importPath, () => moduleSymbol);
     const requireTypePrefix = this.generateModulePrefix(importPath) +
