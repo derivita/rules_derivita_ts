@@ -3,7 +3,7 @@ load("@rules_derivita_ts//js:index.bzl", "js_library")
 js_library(
     name = "greeter",
     srcs = ["greeter.js"],
-    package_name = "test.lib.greeter",
+    module_name = "test.lib.greeter",
     visibility = [
         "//src/app:__pkg__",
         "//src/generated_test:__pkg__",
@@ -13,7 +13,7 @@ js_library(
 js_library(
     name = "logger",
     srcs = ["logger.js"],
-    package_name = "test.lib.logger",
+    module_name = "test.lib.logger",
     visibility = [
         "//src/app:__pkg__",
         "//src/generated_test:__pkg__",

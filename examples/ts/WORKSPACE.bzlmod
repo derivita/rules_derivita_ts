@@ -1,0 +1,41 @@
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+load("@rules_nodejs//nodejs:repositories.bzl", "nodejs_register_toolchains")
+load("@rules_nodejs//nodejs:yarn_repositories.bzl", "yarn_repositories")
+
+# Add local_repository for rules_derivita_ts
+local_repository(
+    name = "rules_derivita_ts",
+    path = "../..",
+)
+
+local_repository(
+    name = "closure_library",
+    path = "../../../closure-library",
+)
+
+http_archive(
+    name = "build_bazel_rules_nodejs",
+    sha256 = "a1295b168f183218bc88117cf00674bcd102498f294086ff58318f830dd9d9d1",
+    urls = [
+        "https://github.com/bazelbuild/rules_nodejs/releases/download/5.8.5/rules_nodejs-5.8.5.tar.gz",
+    ],
+)
+
+nodejs_register_toolchains(
+    name = "nodejs",
+    node_version = "20.14.0",
+    register = True,
+)
+
+yarn_repositories(
+    name = "yarn",
+)
+
+load("@build_bazel_rules_nodejs//:index.bzl", "yarn_install")
+
+yarn_install(
+    name = "npm",
+    exports_directories_only = False,
+    package_json = "//:package.json",
+    yarn_lock = "//:yarn.lock",
+)
