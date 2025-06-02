@@ -3,7 +3,7 @@ import * as path from 'path';
 import * as ts from 'typescript';
 
 // Tsickle is optional, but this import is just used for typechecking.
-import type * as tsickle from 'tsickle';
+import type * as tsickle from 'tsickle/tsickle';
 
 import {Plugin as BazelConformancePlugin} from '../tsetse/runner';
 

@@ -10,10 +10,10 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as ts from 'typescript';
 
-import {assertAbsolute} from '../src/cli_support';
-import {getGeneratedExterns} from '../src/externs';
-import {normalizeLineEndings} from '../src/jsdoc';
-import * as tsickle from '../src/tsickle';
+import {assertAbsolute} from '../cli_support';
+import {getGeneratedExterns} from '../externs';
+import {normalizeLineEndings} from '../jsdoc';
+import * as tsickle from '../tsickle';
 
 import * as testSupport from './test_support';
 

@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import * as tsickle from 'tsickle';
+import * as tsickle from 'tsickle/tsickle';
 import * as ts from 'typescript';
 
 import {FileLoader} from './cache';

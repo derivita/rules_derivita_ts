@@ -9,8 +9,8 @@
 import * as path from 'path';
 import * as ts from 'typescript';
 
-import * as googmodule from '../src/googmodule';
-import {ModulesManifest} from '../src/modules_manifest';
+import * as googmodule from '../googmodule';
+import {ModulesManifest} from '../modules_manifest';
 
 import * as testSupport from './test_support';
 

@@ -1,5 +1,5 @@
 import * as path from 'path';
-import {ModulesManifest} from 'tsickle';
+import {ModulesManifest} from 'tsickle/tsickle';
 import * as ts from 'typescript';
 
 import {UncachedFileLoader} from './cache';

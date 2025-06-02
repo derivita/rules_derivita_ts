@@ -8,7 +8,7 @@
 
 import * as ts from 'typescript';
 
-import * as typeTranslator from '../src/type_translator';
+import * as typeTranslator from '../type_translator';
 
 describe('isBuiltinLibDTS', () => {
   it('matches builtins', () => {

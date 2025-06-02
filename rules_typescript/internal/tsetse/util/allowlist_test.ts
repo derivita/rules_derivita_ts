@@ -43,12 +43,12 @@ describe('ConformancePatternRule allowlist handling', () => {
     expect(results).toHaveNFailures(1);
   });
 
-  it('respects prefix-based allowlists (matching test)', () => {
+  it('respects path-based allowlists (matching test)', () => {
     const config = {
       ...baseConfig,
       allowlistEntries: [{
         reason: ExemptionReason.UNSPECIFIED,
-        prefix: [tmpPrefixForAllowlist],
+        path: [tmpPrefixForAllowlist+'/'],
       }]
     };
     const rule = new ConformancePatternRule(config);
@@ -57,12 +57,12 @@ describe('ConformancePatternRule allowlist handling', () => {
     expect(results).toHaveNoFailures();
   });
 
-  it('respects prefix-based allowlists (non-matching test)', () => {
+  it('respects path-based allowlists (non-matching test)', () => {
     const config = {
       ...baseConfig,
       allowlistEntries: [{
         reason: ExemptionReason.UNSPECIFIED,
-        prefix: ['/nowhere in particular/'],
+        path: ['/nowhere in particular/'],
       }]
     };
     const rule = new ConformancePatternRule(config);

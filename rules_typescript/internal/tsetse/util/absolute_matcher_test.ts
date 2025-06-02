@@ -39,7 +39,7 @@ describe('AbsoluteMatcher', () => {
           compileAndCheck(new ConformancePatternRule(config), ...sources);
 
       expect(results).toHaveFailuresMatching(
-          {matchedCode: `bar`, messageText: 'banned name with file path'});
+          {matchedCode: `Foo.bar`, messageText: 'banned name with file path'});
     });
 
     it('ignores an exported symbol defined in an unmatched file path', () => {
@@ -100,7 +100,7 @@ describe('AbsoluteMatcher', () => {
       const results =
           compileAndCheck(new ConformancePatternRule(config), ...sources);
       expect(results).toHaveFailuresMatching(
-          {matchedCode: `bar`, messageText: 'banned name with file path'});
+          {matchedCode: `Foo.bar`, messageText: 'banned name with file path'});
     });
 
     it('matches names in import statement', () => {
@@ -208,7 +208,7 @@ describe('AbsoluteMatcher', () => {
       const results =
           compileAndCheck(new ConformancePatternRule(config), ...sources);
       expect(results).toHaveFailuresMatching(
-          {matchedCode: `s`, messageText: 'banned name with file path'});
+          {matchedCode: `Foo.s`, messageText: 'banned name with file path'});
     });
 
     it('does not match a property with a name overlapping an in-stock library',
@@ -252,7 +252,7 @@ describe('AbsoluteMatcher', () => {
       const results =
           compileAndCheck(new ConformancePatternRule(config), ...sources);
       expect(results).toHaveFailuresMatching(
-          {matchedCode: `s`, messageText: 'banned name with file path'});
+          {matchedCode: `Moo.s`, messageText: 'banned name with file path'});
     });
 
     it('matches an inherited static method', () => {
@@ -274,7 +274,7 @@ describe('AbsoluteMatcher', () => {
       const results =
           compileAndCheck(new ConformancePatternRule(config), ...sources);
       expect(results).toHaveFailuresMatching(
-          {matchedCode: `bar`, messageText: 'banned name with file path'});
+          {matchedCode: `Moo.bar`, messageText: 'banned name with file path'});
     });
 
     it('does not match a redefined inherited static property', () => {

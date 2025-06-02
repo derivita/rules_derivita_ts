@@ -15,6 +15,7 @@
 # gazelle:exclude worker_protocol.proto
 
 load("@build_bazel_rules_nodejs//:index.bzl", "copy_to_bin", "nodejs_binary")
+load("@npm//@bazel/jasmine:index.bzl", "jasmine_node_test") 
 load("@npm//typescript:index.bzl", "tsc")
 load("//rules_typescript:index.bzl", "ts_library")
 
@@ -96,36 +97,34 @@ nodejs_binary(
     visibility = ["//visibility:public"],
 )
 
-# ts_library(
-#     name = "test_lib",
-#     srcs = glob(_TSC_WRAPPED_TESTS) + _TSC_WRAPPED_TYPINGS,
-#     compiler = "//rules_typescript/internal:tsc_wrapped_bin",
-#     tsconfig = "//rules_typescript/internal:tsconfig.json",
-#     deps = [
-#         # "@npm//@angular/compiler-cli",
-#         "@npm//@types/jasmine",
-#         "@npm//@types/node",
-#         "//tsickle",
-#         "@npm//typescript",
-#     ],
-# )
+ts_library(
+    name = "test_lib",
+    srcs = glob(_TSC_WRAPPED_TESTS) + _TSC_WRAPPED_TYPINGS,
+    compiler = "//rules_typescript/internal:tsc_wrapped_bin",
+    tsconfig = "//rules_typescript/internal:tsconfig.json",
+    tsickle = False,
+    devmode_module = "commonjs",
+    deps = [
+        # "@npm//@angular/compiler-cli",
+        "@npm//@types/jasmine",
+        "@npm//@types/node",
+        "//tsickle",
+        "@npm//typescript",
+    ],
+)
 
-# jasmine_node_test(
-#     name = "test",
-#     srcs = [],
-#     tags = [
-#         # TODO: it seems like this test has been broken since we brought in from rules_typescript
-#         "manual",
-#     ],
-#     deps = _TSC_WRAPPED_JS + [
-#         ":test_lib",
-#         "//rules_typescript/third_party/github.com/bazelbuild/bazel/src/main/protobuf:worker_protocol.proto",
-#         "@npm//jasmine",
-#         "@npm//protobufjs",
-#         "@npm//source-map",
-#         "@npm//typescript",
-#     ],
-# )
+jasmine_node_test(
+    name = "test",
+    srcs = [],
+    deps = _TSC_WRAPPED_JS + [
+        ":test_lib",
+        "//rules_typescript/third_party/github.com/bazelbuild/bazel/src/main/protobuf:worker_protocol.proto",
+        "@npm//jasmine",
+        "@npm//protobufjs",
+        "@npm//source-map",
+        "@npm//typescript",
+    ],
+)
 
 # We don't need to distribute any of the content of the BUILD.bazel file in this package
 # So generate an empty marker file

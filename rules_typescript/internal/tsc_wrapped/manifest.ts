@@ -3,7 +3,7 @@
  * import graph discovered in typescript inputs.
  */
 
-import * as tsickle from 'tsickle';
+import * as tsickle from 'tsickle/tsickle';
 
 /**
  * Recursively walk the import graph provided by tsickle, populating entries

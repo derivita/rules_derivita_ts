@@ -4,7 +4,6 @@ load("//js:index.bzl", closure_js_library = "js_library")
 
 licenses(["notice"])  # MIT
 
-
 _TSICKLE_SRCS = glob(["src/**/*.ts"])
 
 _TSICKLE_JS_SRCS = [k[4:-3] + ".js" for k in _TSICKLE_SRCS]
@@ -32,8 +31,18 @@ tsc(
 js_library(
     name = "tsickle",
     package_name = "tsickle",
-    srcs = _TSICKLE_JS_SRCS + _TSICKLE_DTS_SRCS,
+    srcs = _TSICKLE_JS_SRCS + _TSICKLE_DTS_SRCS + ["package.json"],
     visibility = ["//visibility:public"],
+)
+
+js_library(
+    name = "closure_files",
+    srcs = [
+        "src/closure_externs.js",
+        "third_party/tslib/externs.js",
+        "third_party/tslib/tslib.js",
+    ],
+    visibility = ["//tsickle/test:__pkg__"],
 )
 
 # TODO: figure out how to get rid of this module name hack.

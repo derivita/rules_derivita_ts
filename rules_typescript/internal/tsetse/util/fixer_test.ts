@@ -212,11 +212,9 @@ describe('ConformancePatternRule\'s fixer', () => {
 
       expect(failure.readableRange(0, 0)).toBe('at line 1, char 1');
       expect(failure.readableRange(1, 1)).toBe('at line 1, char 2');
-      expect(failure.readableRange(0, 1)).toBe('line 1, from char 1 to 2');
-      expect(failure.readableRange(0, 1)).toBe('line 1, from char 1 to 2');
+      expect(failure.readableRange(0, 1)).toBe(`'l'`);
       expect(failure.readableRange(7, 7)).toBe('at line 2, char 1');
-      expect(failure.readableRange(0, 7))
-          .toBe('from line 1, char 1 to line 2, char 1');
+      expect(failure.readableRange(0, 7)).toBe(`'let a;\\n'`);
     });
   });
 });
