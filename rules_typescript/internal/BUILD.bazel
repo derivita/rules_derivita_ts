@@ -102,6 +102,7 @@ ts_library(
     srcs = glob(_TSC_WRAPPED_TESTS) + _TSC_WRAPPED_TYPINGS,
     compiler = "//rules_typescript/internal:tsc_wrapped_bin",
     tsconfig = "//rules_typescript/internal:tsconfig.json",
+    tsickle = False,
     devmode_module = "commonjs",
     deps = [
         # "@npm//@angular/compiler-cli",
