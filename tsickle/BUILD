@@ -32,7 +32,7 @@ tsc(
 js_library(
     name = "tsickle",
     package_name = "tsickle",
-    srcs = _TSICKLE_JS_SRCS + _TSICKLE_DTS_SRCS,
+    srcs = _TSICKLE_JS_SRCS + _TSICKLE_DTS_SRCS + ["package.json"],
     visibility = ["//visibility:public"],
 )
 
