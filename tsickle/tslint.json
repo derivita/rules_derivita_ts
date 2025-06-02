@@ -2,7 +2,8 @@
   "rules": {
     "array-type": [true, "array-simple"],
     "arrow-return-shorthand": true,
-    "ban": [true,
+    "ban": [
+      true,
       ["fit"],
       ["fdescribe"],
       ["xit"],
@@ -11,16 +12,20 @@
       ["xitAsync"],
       ["fitFakeAsync"],
       ["xitFakeAsync"],
-      {"name": ["it", "skip"]},
-      {"name": ["it", "only"]},
-      {"name": ["describe", "skip"]},
-      {"name": ["describe", "only"]},
-      {"name": "parseInt"},
-      {"name": "parseFloat"},
-      {"name": "Array"}
+      { "name": ["it", "skip"] },
+      { "name": ["it", "only"] },
+      { "name": ["describe", "skip"] },
+      { "name": ["describe", "only"] },
+      { "name": "parseInt" },
+      { "name": "parseFloat" },
+      { "name": "Array" }
     ],
-    "ban-types": [true,
-      ["Object", "Use {} or 'object' instead. See http://go/ts-style#redundant-types"],
+    "ban-types": [
+      true,
+      [
+        "Object",
+        "Use {} or 'object' instead. See http://go/ts-style#redundant-types"
+      ],
       ["String", "Use 'string' instead."],
       ["Number", "Use 'number' instead."],
       ["Boolean", "Use 'boolean' instead."]
@@ -50,7 +55,11 @@
     "no-unused-expression": true,
     "no-var-keyword": true,
     "object-literal-shorthand": true,
-    "only-arrow-functions": [true, "allow-declarations", "allow-named-functions"],
+    "only-arrow-functions": [
+      true,
+      "allow-declarations",
+      "allow-named-functions"
+    ],
     "prefer-const": true,
     "radix": true,
     "semicolon": [true, "always", "ignore-bound-class-methods"],
@@ -63,7 +72,6 @@
       "ban-keywords",
       "allow-leading-underscore",
       "allow-trailing-underscore"
-    ],
-    "file-header": [true, "Copyright Google Inc\\."]
+    ]
   }
 }

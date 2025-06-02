@@ -3,6 +3,8 @@ import type { SpecialType } from "./demo_exports";
 
 export * from "./demo_exports";
 
+export * as decorators from "./decorators";
+
 const myObj = new MyClass("myObj");
 
-const bazValue: SpecialType = baz()
+const bazValue: SpecialType = baz();

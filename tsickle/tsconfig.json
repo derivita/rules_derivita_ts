@@ -18,7 +18,8 @@
     "strict": true,
     "outDir": "out",
     "paths": {"tsickle": ["./src/tsickle.ts"]},
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "experimentalDecorators": true
   },
   "include": [
     "src/*.ts",
