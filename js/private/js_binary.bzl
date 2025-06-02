@@ -1,30 +1,30 @@
 """Rule for creating JavaScript binaries using Closure Compiler."""
 
-load("//js/private:providers.bzl", "DeclarationInfo", "JSEcmaScriptModuleInfo", "JSInfo")
+load("//js/private:providers.bzl", "ClosurePackageInfo")
 
 def _collect_js(deps):
-    """Collect JS sources and their module names from dependencies."""
+    """Collect JS sources and their module mappings from dependencies."""
     sources = []  # List of source files
     hide_warnings_paths = []  # List of paths to hide warnings for
     extra_annotations = []  # List of JSDoc annotations
-    package_mappings = []  # List of (package_name, package_path) pairs
+    module_mappings = {}  # Dict of module_name -> module_root mappings
 
     for dep in deps:
-        if JSEcmaScriptModuleInfo in dep:
-            info = dep[JSEcmaScriptModuleInfo]
+        if ClosurePackageInfo in dep:
+            info = dep[ClosurePackageInfo]
             sources.extend(info.sources.to_list())
             if info.hide_warnings:
                 hide_warnings_paths.extend(info.hide_warnings.to_list())
             if info.extra_annotations:
                 extra_annotations.extend(info.extra_annotations.to_list())
-            if info.package_mappings:
-                package_mappings.extend(info.package_mappings.to_list())
+            if hasattr(info, 'es6_module_mappings') and info.es6_module_mappings:
+                module_mappings.update(info.es6_module_mappings)
 
-    return sources, hide_warnings_paths, depset(extra_annotations).to_list(), package_mappings
+    return sources, hide_warnings_paths, depset(extra_annotations).to_list(), module_mappings
 
 def _js_binary_impl(ctx):
-    # Collect all sources, warnings paths, annotations, and package mappings
-    js_files, hide_warnings_paths, extra_annotations, package_mappings = _collect_js(ctx.attr.deps)
+    # Collect all sources, warnings paths, annotations, and module mappings
+    js_files, hide_warnings_paths, extra_annotations, module_mappings = _collect_js(ctx.attr.deps)
 
     # All input files for the compiler
     inputs = [f for f in js_files]
@@ -71,9 +71,16 @@ def _js_binary_impl(ctx):
     else:
         args.add("--isolation_mode=IIFE")
 
-    # Add package name prefix mappings
-    for package_name, package_path in package_mappings:
-        args.add("--browser_resolver_prefix_replacements=%s=%s" % (package_name, package_path))
+    # Add module name prefix mappings for Closure Compiler
+    # For Closure Compiler, we need to add the bin directory to module roots so they match actual file paths
+    for module_name, module_root in module_mappings.items():
+        # Add bin directory prefix to match actual JS file locations
+        bin_module_root = "/".join([
+            ctx.bin_dir.path,
+            module_root,
+        ])
+        args.add("--browser_resolver_prefix_replacements=%s=%s" % (module_name, bin_module_root))
+
 
     if ctx.attr.debug:
         args.add("--debug")
@@ -148,14 +155,6 @@ def _js_binary_impl(ctx):
         DefaultInfo(
             files = depset([output_js, output_map]),
         ),
-        JSInfo(
-            js = depset([output_js]),
-            sourcemap = output_map,
-            transitive_js = depset(
-                direct = [output_js],
-                transitive = [dep[JSInfo].transitive_js for dep in ctx.attr.deps if JSInfo in dep],
-            ),
-        ),
     ]
 
 js_binary = rule(
@@ -163,7 +162,7 @@ js_binary = rule(
     attrs = {
         "deps": attr.label_list(
             doc = "js_library targets to compile",
-            providers = [[JSEcmaScriptModuleInfo]],
+            providers = [[ClosurePackageInfo], [DefaultInfo]],
         ),
         "entry_points": attr.string_list(
             doc = "Entry points to be included in the JS bundle",

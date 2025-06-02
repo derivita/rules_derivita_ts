@@ -4,3 +4,7 @@ examples/closure_test/bazel-bin
 examples/closure_test/bazel-closure_test
 examples/closure_test/bazel-testlogs
 examples/closure_test/bazel-out
+examples/ts/bazel-bin
+examples/ts/bazel-ts
+examples/ts/bazel-testlogs
+examples/ts/bazel-out

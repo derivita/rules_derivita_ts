@@ -1,0 +1,21 @@
+{
+  "name": "rules_derivita_ts",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@babel/core": "^7.27.1",
+    "@babel/preset-env": "^7.27.2",
+    "@types/jasmine": "^5.1.8",
+    "@types/minimist": "^1.2.1",
+    "@types/node": "^10.0.3",
+    "@types/semver": "^7.7.0",
+    "babel-jest": "^29.7.0",
+    "jasmine": "^5.7.1",
+    "jest-cli": "^29.6.1",
+    "karma": ">=6.0.0",
+    "protobufjs": "^7.2.5",
+    "source-map-support": "^0.5.19",
+    "ts-lit-plugin": "^2.0.2",
+    "tsutils": "3.21.0",
+    "typescript": "5.2.2"
+  }
+}

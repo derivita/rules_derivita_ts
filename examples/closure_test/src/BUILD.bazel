@@ -3,7 +3,7 @@ load("@rules_derivita_ts//js:index.bzl", "js_library", "js_binary")
 js_library(
     name = "main_lib",
     srcs = ["main.js"],
-    package_name = "test",
+    module_name = "test",
 )
 
 js_binary(

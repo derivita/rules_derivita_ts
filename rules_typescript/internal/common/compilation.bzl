@@ -16,8 +16,9 @@
 """
 
 load("@rules_nodejs//nodejs:providers.bzl", "DeclarationInfo")
+load("//js/private:providers.bzl", "ClosurePackageInfo")
 load(":common/json_marshal.bzl", "json_marshal")
-load(":common/module_mappings.bzl", "module_mappings_aspect")
+load(":common/module_mappings.bzl", "get_module_mappings", "module_mappings_aspect")
 
 _DEBUG = False
 
@@ -443,6 +444,9 @@ def compile_ts(
     for dep in getattr(ctx.attr, "deps", []):
         if hasattr(dep, "typescript"):
             transitive_es6_sources_sets.append(dep.typescript.transitive_es6_sources)
+        elif ClosurePackageInfo in dep:
+            # Also include sources from non-TypeScript dependencies that provide ClosurePackageInfo
+            transitive_es6_sources_sets.append(dep[ClosurePackageInfo].sources)
     transitive_es6_sources = depset(transitive = transitive_es6_sources_sets)
 
     declarations_provider = DeclarationInfo(
@@ -450,6 +454,20 @@ def compile_ts(
         transitive_declarations = transitive_decls,
         type_blocklisted_declarations = type_blocklisted_declarations,
     )
+
+    transitive_hide_warnings_paths = []
+    transitive_extra_annotations = []
+
+    for dep in ctx.attr.deps:
+        if ClosurePackageInfo in dep:
+            info = dep[ClosurePackageInfo]
+            if info.hide_warnings:
+                transitive_hide_warnings_paths.append(info.hide_warnings)
+            if info.extra_annotations:
+                transitive_extra_annotations.append(info.extra_annotations)
+
+    # Get module mappings for this target using the standardized system
+    module_mappings = get_module_mappings(ctx.label, ctx.attr, srcs_files)
 
     # @unsorted-dict-items
     return {
@@ -468,6 +486,14 @@ def compile_ts(
                 _validation = depset(validation_outputs if validation_outputs else []),
                 es5_sources = es5_sources,
                 es6_sources = es6_sources,
+            ),
+            ClosurePackageInfo(
+                sources = transitive_es6_sources,
+                deps = depset(direct = ctx.attr.deps),
+                module_name = None,
+                hide_warnings = depset(transitive=transitive_hide_warnings_paths),
+                extra_annotations = depset(transitive=transitive_extra_annotations),
+                es6_module_mappings = module_mappings,
             ),
             declarations_provider,
         ],

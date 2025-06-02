@@ -456,7 +456,6 @@ def tsc_wrapped_tsconfig(
 
         # config["compilerOptions"]["paths"]["tslib"] = ["external/tsickle/tslib.d.ts"]
         config["bazelOptions"]["tsickle"] = True
-        config["bazelOptions"]["googmodule"] = True
 
     if getattr(ctx.attr, "ignore_warnings", False):
         config["bazelOptions"]["ignoreWarningPaths"] = [src.path for src in srcs]
