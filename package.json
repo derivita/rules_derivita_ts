@@ -4,12 +4,13 @@
   "dependencies": {
     "@babel/core": "^7.27.1",
     "@babel/preset-env": "^7.27.2",
-    "@types/jasmine": "^5.1.8",
+    "@bazel/jasmine": "^5.8.1",
+    "@types/jasmine": "^4.3.5",
     "@types/minimist": "^1.2.1",
     "@types/node": "^10.0.3",
     "@types/semver": "^7.7.0",
     "babel-jest": "^29.7.0",
-    "jasmine": "^5.7.1",
+    "jasmine": "^4.6.0",
     "jest-cli": "^29.6.1",
     "karma": ">=6.0.0",
     "protobufjs": "^7.2.5",
@@ -17,5 +18,8 @@
     "ts-lit-plugin": "^2.0.2",
     "tsutils": "3.21.0",
     "typescript": "5.2.2"
+  },
+  "devDependencies": {
+    "source-map": "0.6.1"
   }
 }

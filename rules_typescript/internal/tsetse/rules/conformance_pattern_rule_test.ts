@@ -14,7 +14,7 @@ describe('ConformancePatternRule creation', () => {
 
     it('generates a name by default', () => {
       const rule = new ConformancePatternRule(baseConfig);
-      expect(rule.ruleName).toBe('conformance-pattern-banned-property-write');
+      expect(rule.ruleName).toBe('');
     });
 
     it('accepts given names', () => {

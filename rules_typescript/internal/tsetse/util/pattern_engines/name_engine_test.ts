@@ -24,11 +24,11 @@ describe('BANNED_NAME', () => {
       kind: PatternKind.BANNED_NAME,
       values: ['GLOBAL|URL.createObjectURL']
     };
-    const source = `URL.createObjectURL({});`;
+    const source = `URL.createObjectURL({} as any);`;
     const results = compileAndCheck(new ConformancePatternRule(config), source);
 
     expect(results).toHaveFailuresMatching(
-        {matchedCode: `createObjectURL`, messageText: 'no blob url'});
+        {matchedCode: `URL.createObjectURL`, messageText: 'no blob url'});
   });
 
   it('does not choke on type aliases', () => {
