@@ -19,6 +19,7 @@ describe('golden file tests', () => {
     testSupport.addDiffMatchers();
   });
   it('compile with Closure', (done) => {
+    process.chdir(testSupport.rootDir());
     // Declaration tests do not produce .js files.
     const tests = goldenTests().filter(t => !t.isDeclarationTest);
     // Collect all JavaScript outputs generated from .ts files.

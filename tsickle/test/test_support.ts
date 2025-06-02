@@ -15,7 +15,7 @@ import * as glob from 'glob';
 import * as path from 'path';
 import * as ts from 'typescript';
 
-import * as cliSupport from '../src/cli_support';
+import * as cliSupport from '../cli_support';
 
 /** Returns true if the current build (likely) runs under bazel. */
 function isInBazel() {
@@ -31,7 +31,7 @@ export function rootDir(): string {
   if (!runfiles) {
     return path.join(__dirname, '..', '..');
   }
-  return path.join(runfiles, 'tsickle');
+  return path.join(runfiles, '_main/tsickle');
 }
 
 /**
@@ -52,7 +52,7 @@ export function relativeToTsickleRoot(filename: string): string {
  */
 function tslibPath() {
   // In bazel.
-  const p = path.join(rootDir(), '../npm/node_modules/tslib/tslib.d.ts');
+  const p = path.join(rootDir(), '../../npm/node_modules/tslib/tslib.d.ts');
   if (fs.existsSync(p)) return p;
   // In plain nodejs.
   return path.join(rootDir(), 'node_modules/tslib/tslib.d.ts');

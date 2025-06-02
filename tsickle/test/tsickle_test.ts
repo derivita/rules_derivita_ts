@@ -9,8 +9,8 @@
 import * as path from 'path';
 import * as ts from 'typescript';
 
-import {assertAbsolute} from '../src/cli_support';
-import * as tsickle from '../src/tsickle';
+import {assertAbsolute} from '../cli_support';
+import * as tsickle from '../tsickle';
 
 import * as testSupport from './test_support';
 

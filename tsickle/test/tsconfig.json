@@ -1,9 +1,10 @@
 {
   "compilerOptions": {
-    "target": "es2015",
+    "target": "es2019",
     "module": "commonjs",
     "moduleResolution": "node",
     "declaration": true,
+    "lib": ["es2019"],
     "strict": false,
     "esModuleInterop": true,
     "skipLibCheck": true,
@@ -12,9 +13,6 @@
     "outDir": ".",
     "types": ["jasmine"]
   },
-  "include": [
-    "*.ts"
-  ],
   "exclude": [
     "node_modules"
   ]

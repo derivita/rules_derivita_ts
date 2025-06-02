@@ -1,127 +1,210 @@
-load("@build_bazel_rules_nodejs//:index.bzl", "nodejs_test", "js_library")
+load("@build_bazel_rules_nodejs//:index.bzl", "js_library", "nodejs_test")
+load("@npm//@bazel/jasmine:index.bzl", "jasmine_node_test")
 load("@npm//typescript:index.bzl", "tsc")
+load("//rules_typescript:index.bzl", "ts_library")
 
 licenses(["notice"])  # MIT
 
 ts_library(
-    name = "test_lib",
-    srcs = glob(["*.ts"]),
+    name = "test_support",
+    srcs = [
+        "ast_printing_transform.ts",
+        "closure.ts",
+        "test_support.ts",
+    ],
+    devmode_module = "commonjs",
+    devmode_target = "es2019",
+    tsconfig = ":tsconfig.json",
+    tsickle = False,
+    visibility = ["//visibility:private"],
     deps = [
+        "//tsickle",
+        "@npm//@types/diff-match-patch",
+        "@npm//@types/glob",
         "@npm//@types/jasmine",
         "@npm//@types/node",
+        "@npm//@types/source-map-support",
+        "@npm//diff-match-patch",
+        "@npm//glob",
+        "@npm//jasmine",
+        "@npm//source-map-support",
+        "@npm//tslib",
         "@npm//typescript",
     ],
-    visibility = ["//visibility:private"],
 )
 
-# Test source files
-_TEST_SRCS = glob([
-    "*.ts",
-])
-
-# Compile test TypeScript files
-tsc(
-    name = "test_lib_js",
-    outs = [k[:-3] + ".js" for k in _TEST_SRCS] + [k[:-3] + ".d.ts" for k in _TEST_SRCS],
-    args = [
-        "--project",
-        "$(execpath tsconfig.json)",
-        "--outDir",
-        "$(RULEDIR)",
-    ],
-    data = [
-        "tsconfig.json",
-        "//tsickle:tsc",  # tsickle compiled sources
-        "@npm//@types/jasmine",
-        "@npm//@types/node",
-        "@npm//typescript",
-    ] + _TEST_SRCS,
+ts_library(
+    name = "decorator_downlevel_transformer",
+    srcs = ["decorator_downlevel_transformer_test.ts"],
+    devmode_module = "commonjs",
+    tsconfig = ":tsconfig.json",
+    tsickle = False,
     visibility = ["//visibility:private"],
-)
-
-js_library(
-    name = "test_lib",
-    srcs = [k[:-3] + ".js" for k in _TEST_SRCS],
     deps = [
-        "@npm//@types/jasmine",
+        ":test_support",
+        "//tsickle",
         "@npm//@types/node",
         "@npm//typescript",
     ],
-    visibility = ["//visibility:private"],
 )
 
-# Main test suite
-nodejs_test(
-    name = "test",
-    entry_point = "test_support.js",
-    data = [
-        ":test_lib",
-        "//tsickle:tsickle",
+jasmine_node_test(
+    name = "decorator_downlevel_transformer_test",
+    srcs = [],
+    deps = [
+        ":decorator_downlevel_transformer",
         "//tsickle/test_files",
         "@npm//jasmine",
+    ],
+)
+
+ts_library(
+    name = "e2e_closure",
+    srcs = ["e2e_closure_test.ts"],
+    data = ["googbase_fake.js"],
+    devmode_module = "commonjs",
+    tsconfig = ":tsconfig.json",
+    tsickle = False,
+    visibility = ["//visibility:private"],
+    deps = [
+        ":test_support",
+        "//tsickle",
+        "@npm//@types/node",
+        "@npm//google-closure-compiler",
         "@npm//typescript",
     ],
 )
 
-# Golden file tests (separate target for easier debugging)
-nodejs_test(
-    name = "golden_test",
-    entry_point = "golden_tsickle_test.js",
-    data = [
-        ":test_lib",
-        "//tsickle:tsickle",
+jasmine_node_test(
+    name = "e2e_closure_test",
+    srcs = [],
+    deps = [
+        ":e2e_closure",
+        "//tsickle:closure_files",
         "//tsickle/test_files",
         "@npm//jasmine",
-        "@npm//typescript",
     ],
-    # Allow updating golden files
-    env = {
-        "UPDATE_GOLDENS": "$(UPDATE_GOLDENS)",
-    },
-    tags = ["manual"],  # Don't run by default since it can modify files
 )
 
-# Individual test targets for easier debugging
-nodejs_test(
-    name = "tsickle_test",
-    entry_point = "tsickle_test.js",
-    data = [
-        ":test_lib",
-        "//tsickle:tsickle",
+ts_library(
+    name = "golden_tsickle",
+    srcs = ["golden_tsickle_test.ts"],
+    devmode_module = "commonjs",
+    tsconfig = ":tsconfig.json",
+    tsickle = False,
+    visibility = ["//visibility:private"],
+    deps = [
+        ":test_support",
+        "//tsickle",
+        "@npm//@types/node",
+        "@npm//typescript",
+    ],
+)
+
+jasmine_node_test(
+    name = "golden_tsickle_test",
+    srcs = [],
+    deps = [
+        ":golden_tsickle",
+        "//tsickle/test_files",
         "@npm//jasmine",
+    ],
+)
+
+ts_library(
+    name = "googmodule",
+    srcs = ["googmodule_test.ts"],
+    devmode_module = "commonjs",
+    tsconfig = ":tsconfig.json",
+    tsickle = False,
+    visibility = ["//visibility:private"],
+    deps = [
+        ":test_support",
+        "//tsickle",
+        "@npm//@types/node",
         "@npm//typescript",
     ],
 )
 
-nodejs_test(
+jasmine_node_test(
     name = "googmodule_test",
-    entry_point = "googmodule_test.js",
-    data = [
-        ":test_lib",
-        "//tsickle:tsickle",
+    srcs = [],
+    deps = [
+        ":googmodule",
+        "//tsickle/test_files",
         "@npm//jasmine",
+    ],
+)
+
+ts_library(
+    name = "jsdoc",
+    srcs = ["jsdoc_test.ts"],
+    devmode_module = "commonjs",
+    tsconfig = ":tsconfig.json",
+    tsickle = False,
+    visibility = ["//visibility:private"],
+    deps = [
+        ":test_support",
+        "//tsickle",
         "@npm//typescript",
     ],
 )
 
-nodejs_test(
+jasmine_node_test(
     name = "jsdoc_test",
-    entry_point = "jsdoc_test.js",
-    data = [
-        ":test_lib",
-        "//tsickle:tsickle",
+    srcs = [],
+    deps = [
+        ":jsdoc",
+        "//tsickle/test_files",
         "@npm//jasmine",
+    ],
+)
+
+ts_library(
+    name = "tsickle",
+    srcs = ["tsickle_test.ts"],
+    devmode_module = "commonjs",
+    tsconfig = ":tsconfig.json",
+    tsickle = False,
+    visibility = ["//visibility:private"],
+    deps = [
+        ":test_support",
+        "//tsickle",
+        "@npm//@types/node",
         "@npm//typescript",
     ],
 )
 
-nodejs_test(
-    name = "type_translator_test",
-    entry_point = "type_translator_test.js",
-    data = [
-        ":test_lib",
-        "//tsickle:tsickle",
+jasmine_node_test(
+    name = "tsickle_test",
+    srcs = [],
+    deps = [
+        ":tsickle",
+        "//tsickle/test_files",
         "@npm//jasmine",
+    ],
+)
+
+ts_library(
+    name = "type_translator",
+    srcs = ["type_translator_test.ts"],
+    devmode_module = "commonjs",
+    tsconfig = ":tsconfig.json",
+    tsickle = False,
+    visibility = ["//visibility:private"],
+    deps = [
+        ":test_support",
+        "//tsickle",
         "@npm//typescript",
+    ],
+)
+
+jasmine_node_test(
+    name = "type_translator_test",
+    srcs = [],
+    deps = [
+        ":type_translator",
+        "//tsickle/test_files",
+        "@npm//jasmine",
     ],
 )

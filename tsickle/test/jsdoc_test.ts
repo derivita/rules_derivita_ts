@@ -6,7 +6,7 @@
  * found in the LICENSE file at https://angular.io/license
  */
 
-import * as jsdoc from '../src/jsdoc';
+import * as jsdoc from '../jsdoc';
 
 describe('jsdoc.parse', () => {
   function parse(text: string) {

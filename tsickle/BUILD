@@ -4,7 +4,6 @@ load("//js:index.bzl", closure_js_library = "js_library")
 
 licenses(["notice"])  # MIT
 
-
 _TSICKLE_SRCS = glob(["src/**/*.ts"])
 
 _TSICKLE_JS_SRCS = [k[4:-3] + ".js" for k in _TSICKLE_SRCS]
@@ -36,6 +35,16 @@ js_library(
     visibility = ["//visibility:public"],
 )
 
+js_library(
+    name = "closure_files",
+    srcs = [
+        "src/closure_externs.js",
+        "third_party/tslib/externs.js",
+        "third_party/tslib/tslib.js",
+    ],
+    visibility = ["//tsickle/test:__pkg__"],
+)
+
 # TODO: figure out how to get rid of this module name hack.
 genrule(
     name = "copy_js",
@@ -58,8 +67,8 @@ genrule(
 
 closure_js_library(
     name = "tslib",
-    srcs = ["tslib.d.ts"],
     package_name = "tslib",
+    srcs = ["tslib.d.ts"],
     # module_root = "tslib.d.ts",
     visibility = ["//visibility:public"],
     deps = ["tslib-closure"],

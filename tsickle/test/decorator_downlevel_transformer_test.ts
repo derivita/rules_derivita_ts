@@ -9,8 +9,8 @@
 import * as path from 'path';
 import * as ts from 'typescript';
 
-import * as cliSupport from '../src/cli_support';
-import * as tsickle from '../src/tsickle';
+import * as cliSupport from '../cli_support';
+import * as tsickle from '../tsickle';
 
 import {createAstPrintingTransform} from './ast_printing_transform';
 import * as testSupport from './test_support';
