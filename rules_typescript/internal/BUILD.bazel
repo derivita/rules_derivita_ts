@@ -56,7 +56,7 @@ tsc(
     args = [
         "--declaration",
         "-p",
-        "$(BINDIR)/rules_typescript/internal/tsconfig.json",
+        "$(RULEDIR)/tsconfig.json",
         "--outDir",
         "$(RULEDIR)",
     ],

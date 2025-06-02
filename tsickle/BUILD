@@ -59,7 +59,7 @@ genrule(
 closure_js_library(
     name = "tslib",
     srcs = ["tslib.d.ts"],
-    package_name = "tslib",
+    module_name = "tslib",
     # module_root = "tslib.d.ts",
     visibility = ["//visibility:public"],
     deps = ["tslib-closure"],

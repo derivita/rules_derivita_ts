@@ -91,7 +91,7 @@ function loadWorkerPb() {
     const runfiles = process.env['BAZEL_NODE_RUNFILES_HELPER'];
     if (runfiles) {
       protofile = require(runfiles).resolve(
-          '_main/rules_typescript/third_party/github.com/bazelbuild/bazel/src/main/protobuf/worker_protocol.proto');
+          'rules_derivita_ts/rules_typescript/third_party/github.com/bazelbuild/bazel/src/main/protobuf/worker_protocol.proto');
     }
     if (!protofile) {
       throw new Error(

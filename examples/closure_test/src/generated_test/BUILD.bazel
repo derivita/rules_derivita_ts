@@ -40,7 +40,7 @@ EOF""",
 
 js_library(
     name = "gen_importer_lib",
-    package_name = "test.generated",
+    module_name = "test.generated",
     srcs = [":gen_importer"],
     deps = [
         "//src/lib:greeter",
@@ -50,7 +50,7 @@ js_library(
 
 js_library(
     name = "gen_exportable_lib",
-    package_name = "test.generated",
+    module_name = "test.generated",
     srcs = [":gen_exportable"],
     extra_annotations = ["suppress"],  # Test extra_annotations feature
     hide_warnings = True,  # Hide warnings for this library
@@ -59,7 +59,7 @@ js_library(
 # Normal source that imports from generated file
 js_library(
     name = "normal_importer_lib",
-    package_name = "test.generated",
+    module_name = "test.generated",
     srcs = ["normal_importer.js"],
     deps = [
         ":gen_exportable_lib",
