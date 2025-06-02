@@ -51,7 +51,6 @@ describe('ConformancePatternRule allowlist handling', () => {
         path: [tmpPrefixForAllowlist+'/'],
       }]
     };
-    debugger;
     const rule = new ConformancePatternRule(config);
     const results = compileAndCheck(rule, source);
 
