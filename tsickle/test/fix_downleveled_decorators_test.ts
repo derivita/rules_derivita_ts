@@ -1,5 +1,5 @@
 import * as ts from 'typescript';
-import {fixDownleveledDecorators} from '../src/fix_downleveled_decorators';
+import {fixDownleveledDecorators} from '../fix_downleveled_decorators';
 import {transformCode} from './transformer_util';
 
 describe('fixDownleveledDecorators', () => {

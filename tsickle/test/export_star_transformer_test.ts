@@ -1,5 +1,5 @@
 import * as ts from 'typescript';
-import {exportStarTransformer} from '../src/export_star_transformer';
+import {exportStarTransformer} from '../export_star_transformer';
 import {transformCode} from './transformer_util';
 
 describe('exportStarTransformer', () => {
