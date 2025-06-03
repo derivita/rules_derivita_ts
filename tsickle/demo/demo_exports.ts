@@ -14,7 +14,7 @@ export function baz() : SpecialType {
 export class MyClass {
   constructor(private objName: string) {}
 
-  public getName() {
+  getName() {
     return this.objName;
   }
 }

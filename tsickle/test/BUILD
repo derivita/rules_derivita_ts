@@ -11,6 +11,7 @@ ts_library(
         "ast_printing_transform.ts",
         "closure.ts",
         "test_support.ts",
+        "transformer_util.ts",
     ],
     devmode_module = "commonjs",
     devmode_target = "es2019",
@@ -204,6 +205,54 @@ jasmine_node_test(
     srcs = [],
     deps = [
         ":type_translator",
+        "//tsickle/test_files",
+        "@npm//jasmine",
+    ],
+)
+
+ts_library(
+    name = "export_star_transformer",
+    srcs = ["export_star_transformer_test.ts"],
+    devmode_module = "commonjs",
+    tsconfig = ":tsconfig.json",
+    tsickle = False,
+    visibility = ["//visibility:private"],
+    deps = [
+        ":test_support",
+        "//tsickle",
+        "@npm//typescript",
+    ],
+)
+
+jasmine_node_test(
+    name = "export_star_transformer_test",
+    srcs = [],
+    deps = [
+        ":export_star_transformer",
+        "//tsickle/test_files",
+        "@npm//jasmine",
+    ],
+)
+
+ts_library(
+    name = "fix_downleveled_decorators",
+    srcs = ["fix_downleveled_decorators_test.ts"],
+    devmode_module = "commonjs",
+    tsconfig = ":tsconfig.json",
+    tsickle = False,
+    visibility = ["//visibility:private"],
+    deps = [
+        ":test_support",
+        "//tsickle",
+        "@npm//typescript",
+    ],
+)
+
+jasmine_node_test(
+    name = "fix_downleveled_decorators_test",
+    srcs = [],
+    deps = [
+        ":fix_downleveled_decorators",
         "//tsickle/test_files",
         "@npm//jasmine",
     ],

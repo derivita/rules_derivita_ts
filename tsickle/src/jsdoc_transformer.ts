@@ -1429,7 +1429,7 @@ export function jsdocTransformer(
       }
 
       function visitor(node: ts.Node): ts.Node|ts.Node[] {
-        const leaveModulesAlone = !host.googmodule && host.transformTypesToClosure
+        const leaveModulesAlone = !host.googmodule && host.transformTypesToClosure;
         if (transformerUtil.isAmbient(node)) {
           if (!transformerUtil.hasModifierFlag(node as ts.Declaration, ts.ModifierFlags.Export)) {
             return node;
