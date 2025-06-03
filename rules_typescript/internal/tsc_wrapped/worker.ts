@@ -90,8 +90,13 @@ function loadWorkerPb() {
     // local development in the rules_typescript repo.
     const runfiles = process.env['BAZEL_NODE_RUNFILES_HELPER'];
     if (runfiles) {
-      protofile = require(runfiles).resolve(
+      try {
+        protofile = require(runfiles).resolve(
           'rules_derivita_ts/rules_typescript/third_party/github.com/bazelbuild/bazel/src/main/protobuf/worker_protocol.proto');
+      } catch (e) {
+        protofile = require(runfiles).resolve(
+          '_main/rules_typescript/third_party/github.com/bazelbuild/bazel/src/main/protobuf/worker_protocol.proto');
+      }
     }
     if (!protofile) {
       throw new Error(
