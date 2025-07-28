@@ -15,8 +15,7 @@
 """Used for compilation by the different implementations of build_defs.bzl.
 """
 
-load("@rules_nodejs//nodejs:providers.bzl", "DeclarationInfo")
-load("//js/private:providers.bzl", "ClosurePackageInfo")
+load("//js/private:providers.bzl", "ClosurePackageInfo", "DeclarationInfo")
 load(":common/json_marshal.bzl", "json_marshal")
 load(":common/module_mappings.bzl", "get_module_mappings", "module_mappings_aspect")
 
@@ -104,16 +103,12 @@ def _collect_dep_declarations(ctx, declaration_infos):
     if hasattr(ctx.attr, "_typescript_typings"):
         transitive_deps_declarations.append(ctx.attr._typescript_typings[DeclarationInfo].transitive_declarations)
 
-    # .d.ts files whose types tsickle will not emit (used for ts_declaration(generate_externs=False).
-    type_blocklisted_declarations = [dep.type_blocklisted_declarations for dep in declaration_infos]
-
     # If a tool like github.com/angular/clutz can create .d.ts from type annotated .js
     # its output will be collected here.
 
     return DeclarationInfo(
         declarations = depset(transitive = direct_deps_declarations),
         transitive_declarations = depset(ctx.files._additional_d_ts, transitive = transitive_deps_declarations),
-        type_blocklisted_declarations = depset(transitive = type_blocklisted_declarations),
     )
 
 def _should_generate_externs(ctx):
@@ -279,10 +274,6 @@ def compile_ts(
 
     dep_declarations = _collect_dep_declarations(ctx, declaration_infos)
 
-    type_blocklisted_declarations = dep_declarations.type_blocklisted_declarations
-    if not is_library and not _should_generate_externs(ctx):
-        type_blocklisted_declarations = depset(srcs_files, transitive = [type_blocklisted_declarations])
-
     # The depsets of output files. These are the files that are always built
     # (including e.g. if you "blaze build :the_target" directly).
     files_depsets = []
@@ -315,7 +306,6 @@ def compile_ts(
         srcs_files,
         jsx_factory = jsx_factory,
         tsickle_externs = tsickle_externs_path,
-        type_blocklisted_declarations = type_blocklisted_declarations.to_list(),
         allowed_deps = allowed_deps,
     )
 
@@ -452,7 +442,7 @@ def compile_ts(
     declarations_provider = DeclarationInfo(
         declarations = depset(transitive = declarations_depsets),
         transitive_declarations = transitive_decls,
-        type_blocklisted_declarations = type_blocklisted_declarations,
+        type_blocklisted_declarations = depset(),
     )
 
     transitive_hide_warnings_paths = []

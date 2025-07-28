@@ -49,7 +49,10 @@ def _js_binary_impl(ctx):
     args.add("--assume_function_wrapper")
     args.add("--compilation_level=%s" % ctx.attr.compilation_level)
     args.add("--language_in=ECMASCRIPT_NEXT")
-    args.add("--language_out=%s" % ctx.attr.language_out)
+    if ctx.attr.browser_featureset_year > 0:
+        args.add("--browser_featureset_year=%s" % ctx.attr.browser_featureset_year)
+    else:
+        args.add("--language_out=%s" % ctx.attr.language_out)
     args.add("--js_output_file=%s" % temp_js.path)
     args.add("--create_source_map=%s" % output_map.path)
     args.add("--source_map_include_content")
@@ -81,6 +84,8 @@ def _js_binary_impl(ctx):
         ])
         args.add("--browser_resolver_prefix_replacements=%s=%s" % (module_name, bin_module_root))
 
+    # TODO: fix this hardcoded workspace name
+    args.add("--browser_resolver_prefix_replacements=derivita=%s" % (ctx.bin_dir.path))
 
     if ctx.attr.debug:
         args.add("--debug")
@@ -186,7 +191,7 @@ js_binary = rule(
         ),
         "browser_featureset_year": attr.int(
             doc = "Target year for browser feature support",
-            default = 2022,
+            default = 0,
         ),
         "conformance_configs": attr.label_list(
             doc = "JS Conformance configurations in text protocol buffer format",
