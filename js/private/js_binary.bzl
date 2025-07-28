@@ -84,6 +84,8 @@ def _js_binary_impl(ctx):
         ])
         args.add("--browser_resolver_prefix_replacements=%s=%s" % (module_name, bin_module_root))
 
+    # TODO: fix this hardcoded workspace name
+    args.add("--browser_resolver_prefix_replacements=derivita=%s" % (ctx.bin_dir.path))
 
     if ctx.attr.debug:
         args.add("--debug")
