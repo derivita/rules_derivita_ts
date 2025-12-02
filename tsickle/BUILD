@@ -1,6 +1,5 @@
 load("@build_bazel_rules_nodejs//:index.bzl", "js_library")
 load("@npm//typescript:index.bzl", "tsc")
-load("//js:index.bzl", closure_js_library = "js_library")
 
 licenses(["notice"])  # MIT
 
@@ -39,37 +38,13 @@ js_library(
     name = "closure_files",
     srcs = [
         "src/closure_externs.js",
-        "third_party/tslib/externs.js",
-        "third_party/tslib/tslib.js",
     ],
+    deps = [":tslib"],
     visibility = ["//tsickle/test:__pkg__"],
 )
 
-# TODO: figure out how to get rid of this module name hack.
-genrule(
-    name = "copy_js",
-    srcs = ["third_party/tslib/tslib.js"],
-    outs = ["tslib.js"],
-    cmd = "cat $<|sed -e \"s/'tslib'/'derivita.external.tsickle.tslib'/\" >$@",
-)
-
-closure_js_library(
-    name = "tslib-closure",
-    srcs = ["tslib.js"],
-)
-
-genrule(
-    name = "copy_dts",
-    srcs = ["@npm//:node_modules/tslib/tslib.d.ts"],
-    outs = ["tslib.d.ts"],
-    cmd = "cp $< $@",
-)
-
-closure_js_library(
+alias(
     name = "tslib",
-    srcs = ["tslib.d.ts"],
-    module_name = "tslib",
-    # module_root = "tslib.d.ts",
+    actual = "//tsickle/third_party/tslib:tslib",
     visibility = ["//visibility:public"],
-    deps = ["tslib-closure"],
 )
