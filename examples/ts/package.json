@@ -2,7 +2,7 @@
   "name": "rules_derivita_ts",
   "license": "UNLICENSED",
   "dependencies": {
-    "@babel/core": "^7.27.1",
+    "@babel/core": "^7.29.6",
     "@babel/preset-env": "^7.27.2",
     "@types/jasmine": "^5.1.8",
     "@types/minimist": "^1.2.1",
