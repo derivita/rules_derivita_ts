@@ -23,7 +23,6 @@
     "glob": "8.0.1",
     "google-closure-compiler": "^20230502.0.0",
     "jasmine": "^4.1.0",
-    "jasmine-node": "^3.0.0",
     "source-map": "^0.7.3",
     "source-map-support": "^0.5.19",
     "tslib": "^2.2.0",
